@@ -72,61 +72,34 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
       className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
       role="dialog"
       aria-modal="true"
-      aria-label="Resume summary"
+      aria-label="Resume"
       onClick={onClose}
     >
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
       <div
-        className="relative w-full max-w-3xl bg-neutral-950 border border-zinc-700/60 rounded-2xl shadow-[0_0_60px_-15px_rgba(255,255,255,0.15)] overflow-hidden"
+        className="relative w-full max-w-4xl bg-neutral-950 border border-zinc-700/60 rounded-2xl shadow-[0_0_60px_-15px_rgba(255,255,255,0.15)] overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-800">
           <div className="flex items-center gap-2 text-sm text-zinc-300">
             <FileText className="w-4 h-4 text-zinc-400" />
-            Resume Summary — Moaz Shahin (Cody Axton)
+            Resume — Moaz Shahin (Cody Axton)
           </div>
           <button
             onClick={onClose}
             className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-700 flex items-center justify-center hover:bg-zinc-800 transition-colors"
-            aria-label="Close resume summary"
+            aria-label="Close resume"
           >
             <X className="w-4 h-4 text-zinc-400" />
           </button>
         </div>
 
-        <div className="max-h-[60vh] sm:max-h-[65vh] overflow-y-auto px-6 py-6 space-y-6">
-          <div>
-            <h3 className="text-xl font-bold text-white">Moaz Shahin</h3>
-            <p className="text-sm bg-gradient-to-r from-zinc-200 to-zinc-500 bg-clip-text text-transparent font-medium">
-              Founder &amp; AI Automation Specialist — Mortal VA
-            </p>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-xs text-zinc-500">
-              <span className="flex items-center gap-1.5">
-                <Mail className="w-3.5 h-3.5" /> codyaxton@outlook.com
-              </span>
-              <span className="flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5" /> Egypt (Remote)
-              </span>
-            </div>
-          </div>
-
-          {roles.map((role) => (
-            <div key={role.role} className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
-              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <h4 className="text-sm font-semibold text-white">{role.role}</h4>
-                <span className="text-xs text-zinc-500">— {role.company}</span>
-              </div>
-              <p className="text-xs text-zinc-500 mt-1">{role.period}</p>
-              <ul className="mt-2 space-y-1.5">
-                {role.highlights.map((h) => (
-                  <li key={h} className="flex items-start gap-2 text-sm text-zinc-400 leading-relaxed">
-                    <span className="w-1 h-1 rounded-full bg-gradient-to-b from-zinc-200 to-zinc-600 mt-2 shrink-0" />
-                    {h}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+        <div className="h-[72vh]">
+          <iframe
+            src="/Moaz-Shahin-Resume.pdf"
+            title="Moaz Shahin Resume"
+            className="w-full h-full border-0 bg-white"
+          />
         </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-6 py-4 border-t border-zinc-800">

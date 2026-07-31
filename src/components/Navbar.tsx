@@ -1,5 +1,6 @@
 import { Menu, X } from 'lucide-react'
 import { useState } from 'react'
+import Logo from './Logo'
 
 const navLinks = [
   { href: '#funnels', label: 'Funnels' },
@@ -15,11 +16,7 @@ const Navbar = () => {
     <header className="fixed top-0 w-full bg-neutral-950/85 backdrop-blur-md border-b border-zinc-800 z-50">
       <div className="max-w-7xl mx-auto px-8">
         <div className="h-20 flex items-center justify-between">
-          <a href="#" className="text-lg font-bold tracking-tight">
-            <span className="bg-gradient-to-r from-zinc-200 to-zinc-400 bg-clip-text text-transparent">
-              Mortal VA
-            </span>
-          </a>
+          <Logo />
 
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (

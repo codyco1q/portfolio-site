@@ -1,6 +1,10 @@
+import { useState } from 'react'
 import { ArrowRight, Phone } from 'lucide-react'
+import BookingModal from './BookingModal'
 
 const CTA = () => {
+  const [bookingOpen, setBookingOpen] = useState(false)
+
   return (
     <section id="cta" className="py-24 px-8 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-zinc-950/40 to-neutral-950" />
@@ -16,16 +20,15 @@ const CTA = () => {
         <p className="text-base text-zinc-400 mb-10 max-w-lg mx-auto leading-relaxed">
           Let&rsquo;s build an autonomous revenue system tailored specifically for your offer. No fluff, just architecture.
         </p>
-        <a
-          href="https://book-a-call.gmc-llc.net/step1-page"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 bg-white text-neutral-950 px-8 py-4 rounded-full text-sm font-medium hover:bg-zinc-200 transition-all duration-300 shadow-[0_0_30px_-5px_rgba(255,255,255,0.15)] group"
+        <button
+          onClick={() => setBookingOpen(true)}
+          className="inline-flex items-center gap-2 bg-white text-neutral-950 px-8 py-4 rounded-full text-sm font-medium hover:bg-zinc-200 transition-all duration-300 shadow-[0_0_30px_-5px_rgba(255,255,255,0.15)] group cursor-pointer"
         >
           Book an Automation Strategy Call
           <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-        </a>
+        </button>
       </div>
+      {bookingOpen && <BookingModal onClose={() => setBookingOpen(false)} />}
     </section>
   )
 }

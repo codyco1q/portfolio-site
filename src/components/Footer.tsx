@@ -1,4 +1,5 @@
 import { Globe, ExternalLink } from 'lucide-react'
+import Logo from './Logo'
 
 const LinkedinIcon = () => (
   <svg
@@ -44,11 +45,9 @@ const Footer = () => {
       <div className="relative max-w-7xl mx-auto px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
-            <h3 className="text-lg font-bold tracking-tight mb-2">
-              <span className="bg-gradient-to-r from-zinc-200 to-zinc-400 bg-clip-text text-transparent">
-                Mortal VA
-              </span>
-            </h3>
+            <div className="mb-3">
+              <Logo />
+            </div>
             <p className="text-sm text-zinc-500 leading-relaxed mb-4">
               Autonomous AI systems, high-converting funnels, and enterprise workflow architecture for global operations.
             </p>
@@ -112,7 +111,7 @@ const Footer = () => {
 
         <div className="mt-10 pt-6 border-t border-zinc-800/50 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-xs text-zinc-600">
-            Moaz Shahin &copy; {new Date().getFullYear()} — Mortal VA. All rights reserved.
+            Cody &copy; {new Date().getFullYear()} — Moaz Shahin. All rights reserved.
           </div>
           <div className="flex items-center gap-1 text-xs text-zinc-700">
             <Globe className="w-3 h-3" />
