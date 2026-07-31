@@ -1,4 +1,7 @@
 import { ExternalLink } from 'lucide-react'
+import Reveal from './Reveal'
+import Section from './Section'
+import SpotlightCard from './SpotlightCard'
 
 const funnels = [
   {
@@ -38,27 +41,16 @@ const funnels = [
 
 const PortfolioFunnels = () => {
   return (
-    <section id="funnels" className="py-24 px-8 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-zinc-950/20 to-neutral-950" />
-      <div className="relative max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <p className="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-4">
-            Featured Live Funnels
-          </p>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
-            Featured Live Funnels &amp; Web Architectures
-          </h2>
-          <p className="text-base text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-            Custom high-converting sales systems, webinar engines, and product landing pages built for global clients.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {funnels.map((funnel) => (
-            <div
-              key={funnel.title}
-              className="group bg-zinc-900/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 hover:border-zinc-600/50 transition-all duration-300 hover:-translate-y-1"
-            >
+    <Section
+      id="funnels"
+      eyebrow="Featured Live Funnels"
+      title="Featured Live Funnels &amp; Web Architectures"
+      subtitle="Custom high-converting sales systems, webinar engines, and product landing pages built for global clients."
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {funnels.map((funnel, i) => (
+          <Reveal key={funnel.title} className="h-full" delay={i * 0.08}>
+            <SpotlightCard className="h-full bg-zinc-900/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 hover:border-zinc-600/50 transition-all duration-300 hover:-translate-y-1">
               <h3 className="text-lg font-semibold text-white mb-3 leading-snug">{funnel.title}</h3>
               <p className="text-sm text-zinc-400 leading-relaxed mb-5">{funnel.description}</p>
               <div className="space-y-2">
@@ -77,11 +69,11 @@ const PortfolioFunnels = () => {
                   </a>
                 ))}
               </div>
-            </div>
-          ))}
-        </div>
+            </SpotlightCard>
+          </Reveal>
+        ))}
       </div>
-    </section>
+    </Section>
   )
 }
 

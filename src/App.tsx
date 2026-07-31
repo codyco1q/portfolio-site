@@ -3,9 +3,11 @@ import Lenis from 'lenis'
 import gsap from 'gsap'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
+import TechMarquee from './components/TechMarquee'
 import Stats from './components/Stats'
 import PortfolioFunnels from './components/PortfolioFunnels'
 import ProofShowcase from './components/ProofShowcase'
+import CaseStudies from './components/CaseStudies'
 import Services from './components/Services'
 import Experience from './components/Experience'
 import CTA from './components/CTA'
@@ -44,13 +46,21 @@ function App() {
 
   return (
     <div className="min-h-screen bg-neutral-950 text-white font-sans">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-full focus:bg-white focus:text-neutral-950 focus:text-sm focus:font-medium"
+      >
+        Skip to content
+      </a>
       <Navbar />
 
-      <main>
+      <main id="main">
         <Hero />
+        <TechMarquee />
         <Stats />
         <PortfolioFunnels />
         <ProofShowcase />
+        <CaseStudies />
         <Services />
         <Experience />
         <CTA />

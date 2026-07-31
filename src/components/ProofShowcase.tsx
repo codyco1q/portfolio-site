@@ -1,4 +1,7 @@
 import { Cpu, Share2, GitBranch, Mic } from 'lucide-react'
+import Reveal from './Reveal'
+import Section from './Section'
+import SpotlightCard from './SpotlightCard'
 
 const proofs = [
   {
@@ -45,29 +48,19 @@ const proofs = [
 
 const ProofShowcase = () => {
   return (
-    <section id="proof" className="py-24 px-8 relative">
-      <div className="absolute inset-0 bg-zinc-950/30" />
-      <div className="relative max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <p className="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-4">
-            Battle-Tested AI &amp; Automation Architecture
-          </p>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
-            Battle-Tested AI &amp; Automation Architecture
-          </h2>
-          <p className="text-base text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-            Live backend visual execution nodes powered by n8n, Make.com, Gemini AI, OpenAI, and GoHighLevel.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {proofs.map((item) => {
-            const Icon = item.icon
-            return (
-              <div
-                key={item.title}
-                className="bg-zinc-900/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 hover:border-zinc-600/50 transition-all duration-300"
-              >
+    <Section
+      id="proof"
+      className="bg-zinc-950/30"
+      eyebrow="Battle-Tested AI &amp; Automation Architecture"
+      title="Battle-Tested AI &amp; Automation Architecture"
+      subtitle="Live backend visual execution nodes powered by n8n, Make.com, Gemini AI, OpenAI, and GoHighLevel."
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {proofs.map((item, i) => {
+          const Icon = item.icon
+          return (
+            <Reveal key={item.title} className="h-full" delay={i * 0.08}>
+              <SpotlightCard className="h-full bg-zinc-900/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 hover:border-zinc-600/50 transition-all duration-300">
                 <div className="flex items-start gap-4 mb-4">
                   <div className="w-10 h-10 rounded-lg bg-zinc-800/50 border border-zinc-700/50 flex items-center justify-center shrink-0 mt-0.5">
                     <Icon className="w-5 h-5 text-zinc-300" />
@@ -85,12 +78,12 @@ const ProofShowcase = () => {
                     </li>
                   ))}
                 </ul>
-              </div>
-            )
-          })}
-        </div>
+              </SpotlightCard>
+            </Reveal>
+          )
+        })}
       </div>
-    </section>
+    </Section>
   )
 }
 

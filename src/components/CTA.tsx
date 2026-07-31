@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ArrowRight, Phone } from 'lucide-react'
 import BookingModal from './BookingModal'
+import Magnetic from './Magnetic'
 
 const CTA = () => {
   const [bookingOpen, setBookingOpen] = useState(false)
@@ -20,13 +21,15 @@ const CTA = () => {
         <p className="text-base text-zinc-400 mb-10 max-w-lg mx-auto leading-relaxed">
           Let&rsquo;s build an autonomous revenue system tailored specifically for your offer. No fluff, just architecture.
         </p>
-        <button
-          onClick={() => setBookingOpen(true)}
-          className="inline-flex items-center gap-2 bg-white text-neutral-950 px-8 py-4 rounded-full text-sm font-medium hover:bg-zinc-200 transition-all duration-300 shadow-[0_0_30px_-5px_rgba(255,255,255,0.15)] group cursor-pointer"
-        >
-          Book an Automation Strategy Call
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-        </button>
+        <Magnetic>
+          <button
+            onClick={() => setBookingOpen(true)}
+            className="inline-flex items-center gap-2 bg-white text-neutral-950 px-8 py-4 rounded-full text-sm font-medium hover:bg-zinc-200 transition-all duration-300 shadow-[0_0_30px_-5px_rgba(255,255,255,0.15)] group cursor-pointer"
+          >
+            Book an Automation Strategy Call
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+          </button>
+        </Magnetic>
       </div>
       {bookingOpen && <BookingModal onClose={() => setBookingOpen(false)} />}
     </section>

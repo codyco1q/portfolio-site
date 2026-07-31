@@ -1,5 +1,5 @@
 import { Menu, X } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Logo from './Logo'
 
 const navLinks = [
@@ -11,9 +11,26 @@ const navLinks = [
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    const onScroll = () => {
+      const doc = document.documentElement
+      const max = doc.scrollHeight - doc.clientHeight
+      setProgress(max > 0 ? (doc.scrollTop / max) * 100 : 0)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
     <header className="fixed top-0 w-full bg-neutral-950/85 backdrop-blur-md border-b border-zinc-800 z-50">
+      <div
+        className="h-0.5 bg-gradient-to-r from-zinc-200 via-zinc-300 to-zinc-500 transition-[width] duration-150 ease-out"
+        style={{ width: `${progress}%` }}
+        aria-hidden="true"
+      />
       <div className="max-w-7xl mx-auto px-8">
         <div className="h-20 flex items-center justify-between">
           <Logo />
@@ -39,6 +56,8 @@ const Navbar = () => {
           <button
             className="md:hidden p-2 rounded-lg hover:bg-zinc-900 transition-colors text-zinc-400"
             onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isOpen}
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>

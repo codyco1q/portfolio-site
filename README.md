@@ -1,32 +1,59 @@
-# React + TypeScript + Vite
+# Cody — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Personal portfolio for **Cody (Moaz Shahin)**, AI Automation & Funnel Engineer. A dark, metallic single-page site built with React + Vite, featuring live funnels, automation case studies, a career timeline, a PDF resume viewer, and a Make.com-powered strategy call booking modal.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Vite + React 19 + TypeScript**
+- **Tailwind CSS v4**
+- **GSAP + Lenis** — scroll-driven animations and buttery smooth scrolling
+- **lucide-react** — icons
+- **Space Grotesk** — display font (@fontsource)
 
-## React Compiler
+## Getting started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+npm run dev      # start dev server at http://localhost:5173/
+npm run build    # type-check + production build
+npm run lint     # oxlint
+npm run preview  # preview the production build
+```
 
-## Expanding the Oxlint configuration
+## Booking webhook
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+The "Book an Automation Strategy Call" modal POSTs a JSON payload to a Make.com webhook.
+
+```bash
+# .env.local
+VITE_MAKE_WEBHOOK_URL=https://hook.eu2.make.com/your-hook-id
+```
+
+Payload:
 
 ```json
 {
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
+  "name": "Full Name",
+  "email": "person@domain.com",
+  "date": "2026-08-05",
+  "time": "14:00",
+  "startDateTime": "2026-08-05T14:00:00",
+  "notes": "Automation goals"
 }
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Make returns `200` on success to trigger the confirmation screen.
+
+## Project structure
+
+```
+src/
+  components/        Section components (Hero, Navbar, Stats, Funnels, CaseStudies, ...)
+  App.tsx            Page composition + Lenis/GSAP setup
+  index.css          Tailwind theme, fonts, animations
+public/              favicon, resume PDF
+```
+
+## Deploying
+
+Build with `npm run build` and host the `dist/` folder anywhere (Vercel, Netlify, GitHub Pages, etc.).

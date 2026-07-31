@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Briefcase, Calendar, Download, FileText, MapPin, Mail, X } from 'lucide-react'
+import Reveal from './Reveal'
+import Section from './Section'
 
 const roles = [
   {
@@ -128,24 +130,19 @@ const Experience = () => {
   const [resumeOpen, setResumeOpen] = useState(false)
 
   return (
-    <section id="experience" className="py-24 px-8 relative">
-      <div className="absolute inset-0 bg-zinc-950/30" />
-      <div className="relative max-w-4xl mx-auto">
-        <div className="text-center mb-16">
-          <p className="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-4">
-            Career Evolution
-          </p>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
-            Engineering Autonomous Revenue Systems
-          </h2>
-          <p className="text-base text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-            6+ years of building end-to-end automation infrastructures, high-converting sales funnels, and enterprise AI workflows.
-          </p>
-        </div>
+    <>
+      <Section
+        id="experience"
+        className="bg-zinc-950/30"
+        eyebrow="Career Evolution"
+        title="Engineering Autonomous Revenue Systems"
+        subtitle="6+ years of building end-to-end automation infrastructures, high-converting sales funnels, and enterprise AI workflows."
+        innerClassName="max-w-4xl"
+      >
 
         <div className="relative space-y-8 before:absolute before:left-[19px] before:top-0 before:bottom-0 before:w-px before:bg-gradient-to-b before:from-zinc-600 before:via-zinc-800 before:to-zinc-600">
-          {roles.map((role) => (
-            <div key={role.role} className="relative pl-14">
+          {roles.map((role, i) => (
+            <Reveal key={role.role} className="relative pl-14" delay={i * 0.06}>
               <div className="absolute left-0 top-0 w-10 h-10 rounded-full bg-gradient-to-br from-zinc-700 via-zinc-900 to-zinc-800 border border-zinc-500/60 shadow-[0_0_15px_-3px_rgba(255,255,255,0.15)] flex items-center justify-center">
                 <Briefcase className="w-4 h-4 text-zinc-200" />
               </div>
@@ -178,7 +175,7 @@ const Experience = () => {
                   ))}
                 </ul>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
 
@@ -199,10 +196,10 @@ const Experience = () => {
             Download Resume (PDF)
           </a>
         </div>
-      </div>
+      </Section>
 
       {resumeOpen && <ResumeModal onClose={() => setResumeOpen(false)} />}
-    </section>
+    </>
   )
 }
 

@@ -57,6 +57,7 @@ const BookingModal = ({ onClose }: { onClose: () => void }) => {
   const [email, setEmail] = useState('')
   const [website, setWebsite] = useState('')
   const [notes, setNotes] = useState('')
+  const [honeypot, setHoneypot] = useState('')
   const [status, setStatus] = useState<Status>('idle')
 
   useEffect(() => {
@@ -88,6 +89,10 @@ const BookingModal = ({ onClose }: { onClose: () => void }) => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     if (!canSubmit) return
+    if (honeypot) {
+      setStatus('success')
+      return
+    }
     setStatus('submitting')
     try {
       const res = await fetch(MAKE_WEBHOOK_URL, {
@@ -273,12 +278,29 @@ const BookingModal = ({ onClose }: { onClose: () => void }) => {
                     rows={3}
                     className={`${inputClass} sm:col-span-2 resize-none`}
                   />
+                  <input
+                    type="text"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                    name="company_website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    className="hidden"
+                    aria-hidden="true"
+                  />
                 </div>
               </div>
 
               {status === 'error' && (
                 <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
-                  Something went wrong sending your request. Please try again.
+                  Something went wrong sending your request. Please try again, or email me directly at{' '}
+                  <a
+                    href="mailto:codyaxton@outlook.com"
+                    className="text-red-200 underline underline-offset-2 hover:text-white"
+                  >
+                    codyaxton@outlook.com
+                  </a>
+                  .
                 </div>
               )}
 
