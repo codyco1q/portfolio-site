@@ -98,8 +98,8 @@ const BookingModal = ({ onClose }: { onClose: () => void }) => {
           email: email.trim(),
           date: selectedDate,
           time: selectedTime,
+          startDateTime: `${selectedDate}T${selectedTime}:00`,
           notes: notes.trim(),
-          submittedAt: new Date().toISOString(),
         }),
       })
       if (res.ok) setStatus('success')
