@@ -4,8 +4,9 @@ import Logo from './Logo'
 
 const navLinks = [
   { href: '#funnels', label: 'Funnels' },
-  { href: '#proof', label: 'Proof' },
+  { href: '#automations', label: 'Automations' },
   { href: '#services', label: 'Services' },
+  { href: '#process', label: 'Process' },
   { href: '#experience', label: 'Experience' },
 ]
 
@@ -45,6 +46,10 @@ const Navbar = () => {
                 {link.label}
               </a>
             ))}
+            <span className="inline-flex items-center gap-2 text-xs text-emerald-300/90 bg-emerald-400/10 border border-emerald-400/20 rounded-full px-3 py-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              Open for new projects
+            </span>
             <a
               href="#cta"
               className="text-sm px-4 py-2 rounded-full bg-white text-neutral-950 font-medium hover:bg-zinc-200 transition-colors"

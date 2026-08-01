@@ -55,3 +55,13 @@ html.lenis body {
 .lenis.lenis-stopped {
   overflow: hidden;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-shimmer,
+  .animate-blink,
+  .animate-bounce,
+  .animate-pulse {
+    animation: none !important;
+  }
+}

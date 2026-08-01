@@ -5,10 +5,14 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import TechMarquee from './components/TechMarquee'
 import Stats from './components/Stats'
+import ClientLogos from './components/ClientLogos'
 import PortfolioFunnels from './components/PortfolioFunnels'
 import ProofShowcase from './components/ProofShowcase'
+import DemoShowcase from './components/DemoShowcase'
 import CaseStudies from './components/CaseStudies'
+import Testimonials from './components/Testimonials'
 import Services from './components/Services'
+import Process from './components/Process'
 import Experience from './components/Experience'
 import CTA from './components/CTA'
 import Footer from './components/Footer'
@@ -58,10 +62,14 @@ function App() {
         <Hero />
         <TechMarquee />
         <Stats />
+        <ClientLogos />
         <PortfolioFunnels />
         <ProofShowcase />
+        <DemoShowcase />
         <CaseStudies />
+        <Testimonials />
         <Services />
+        <Process />
         <Experience />
         <CTA />
       </main>

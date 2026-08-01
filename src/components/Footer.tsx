@@ -25,7 +25,7 @@ const GithubIcon = () => (
 
 const footerLinks = [
   { href: '#funnels', label: 'Funnels' },
-  { href: '#proof', label: 'Proof' },
+  { href: '#automations', label: 'Automations' },
   { href: '#services', label: 'Services' },
   { href: '#experience', label: 'Experience' },
   { href: '#cta', label: 'Contact' },
