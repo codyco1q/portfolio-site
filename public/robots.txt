@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://codyco1q.github.io/portfolio-site/sitemap.xml
+Sitemap: https://codys-new-portfolio.vercel.app/sitemap.xml
