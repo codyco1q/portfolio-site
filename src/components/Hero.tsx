@@ -9,20 +9,6 @@ const Hero = () => {
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-zinc-500/5 rounded-full blur-3xl pointer-events-none" />
       <div className="relative">
         <Reveal y={16}>
-          <div className="mb-10 flex justify-center">
-            <div className="rounded-full bg-gradient-to-b from-zinc-200 to-zinc-600 p-[3px] shadow-[0_0_35px_-8px_rgba(255,255,255,0.25)]">
-              <img
-                src="/headshot.jpg"
-                alt="Moaz Shahin (Cody) — AI Automation & Funnel Engineer"
-                className="w-28 h-28 rounded-full object-cover bg-neutral-900"
-                width={112}
-                height={112}
-              />
-            </div>
-          </div>
-        </Reveal>
-
-        <Reveal y={16}>
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-500/20 bg-zinc-900/50 backdrop-blur-sm text-zinc-400 text-xs mb-8 font-mono">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             ~/cody
