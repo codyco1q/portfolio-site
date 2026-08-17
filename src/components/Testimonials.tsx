@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Briefcase, ChevronLeft, ChevronRight } from 'lucide-react'
 import Reveal from './Reveal'
 import Section from './Section'
@@ -30,30 +30,24 @@ const clientResults = [
 const Testimonials = () => {
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
-  const [direction, setDirection] = useState<'next' | 'prev'>('next')
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null)
 
   useEffect(() => {
     if (paused) return
     const id = setInterval(() => {
-      setDirection('next')
       setIndex((i) => (i + 1) % clientResults.length)
     }, 6000)
     return () => clearInterval(id)
   }, [paused])
 
   const goTo = (i: number) => {
-    setDirection(i > index ? 'next' : 'prev')
     setIndex(i)
   }
 
   const goNext = () => {
-    setDirection('next')
     setIndex((i) => (i + 1) % clientResults.length)
   }
 
   const goPrev = () => {
-    setDirection('prev')
     setIndex((i) => (i - 1 + clientResults.length) % clientResults.length)
   }
 
