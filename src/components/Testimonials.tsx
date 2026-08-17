@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Briefcase, ChevronLeft, ChevronRight } from 'lucide-react'
 import Reveal from './Reveal'
 import Section from './Section'
@@ -30,12 +30,32 @@ const clientResults = [
 const Testimonials = () => {
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
+  const [direction, setDirection] = useState<'next' | 'prev'>('next')
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null)
 
   useEffect(() => {
     if (paused) return
-    const id = setInterval(() => setIndex((i) => (i + 1) % clientResults.length), 6000)
+    const id = setInterval(() => {
+      setDirection('next')
+      setIndex((i) => (i + 1) % clientResults.length)
+    }, 6000)
     return () => clearInterval(id)
   }, [paused])
+
+  const goTo = (i: number) => {
+    setDirection(i > index ? 'next' : 'prev')
+    setIndex(i)
+  }
+
+  const goNext = () => {
+    setDirection('next')
+    setIndex((i) => (i + 1) % clientResults.length)
+  }
+
+  const goPrev = () => {
+    setDirection('prev')
+    setIndex((i) => (i - 1 + clientResults.length) % clientResults.length)
+  }
 
   const current = clientResults[index]
 
@@ -50,6 +70,9 @@ const Testimonials = () => {
       <Reveal>
         <div
           className="relative bg-zinc-900/40 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-zinc-800/50"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Client results"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
@@ -57,21 +80,33 @@ const Testimonials = () => {
             <Briefcase className="w-5 h-5 text-zinc-300" />
           </div>
 
-          <div key={index} className="min-h-[230px] flex flex-col">
-            <p className="text-lg md:text-xl text-zinc-200 leading-relaxed mb-8">{current.summary}</p>
-            <div className="flex flex-wrap gap-2 mb-6">
-              {current.metrics.map((m) => (
-                <span
-                  key={m}
-                  className="text-xs font-mono text-emerald-300/90 bg-emerald-400/10 border border-emerald-400/20 rounded-full px-3 py-1.5"
-                >
-                  {m}
-                </span>
-              ))}
-            </div>
-            <div className="mt-auto">
-              <div className="text-sm font-semibold text-white">{current.company}</div>
-              <div className="text-xs text-zinc-500 mt-0.5">{current.tag}</div>
+          <div
+            aria-live="polite"
+            aria-atomic="true"
+            className="relative"
+          >
+            <div
+              key={index}
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`Result ${index + 1} of ${clientResults.length}`}
+              className="animate-fadeSlide"
+            >
+              <p className="text-lg md:text-xl text-zinc-200 leading-relaxed mb-8">{current.summary}</p>
+              <div className="flex flex-wrap gap-2 mb-6">
+                {current.metrics.map((m) => (
+                  <span
+                    key={m}
+                    className="text-xs font-mono text-emerald-300/90 bg-emerald-400/10 border border-emerald-400/20 rounded-full px-3 py-1.5"
+                  >
+                    {m}
+                  </span>
+                ))}
+              </div>
+              <div className="mt-auto">
+                <div className="text-sm font-semibold text-white">{current.company}</div>
+                <div className="text-xs text-zinc-500 mt-0.5">{current.tag}</div>
+              </div>
             </div>
           </div>
 
@@ -80,7 +115,7 @@ const Testimonials = () => {
               {clientResults.map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => setIndex(i)}
+                  onClick={() => goTo(i)}
                   aria-label={`Show result ${i + 1}`}
                   aria-current={i === index}
                   className={`h-1.5 rounded-full transition-all duration-300 ${
@@ -91,14 +126,14 @@ const Testimonials = () => {
             </div>
             <div className="flex gap-2">
               <button
-                onClick={() => setIndex((index - 1 + clientResults.length) % clientResults.length)}
+                onClick={goPrev}
                 aria-label="Previous result"
                 className="w-9 h-9 rounded-lg bg-zinc-900 border border-zinc-700 flex items-center justify-center hover:bg-zinc-800 hover:border-zinc-500 transition-colors text-zinc-300"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
-                onClick={() => setIndex((index + 1) % clientResults.length)}
+                onClick={goNext}
                 aria-label="Next result"
                 className="w-9 h-9 rounded-lg bg-zinc-900 border border-zinc-700 flex items-center justify-center hover:bg-zinc-800 hover:border-zinc-500 transition-colors text-zinc-300"
               >

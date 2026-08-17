@@ -3,6 +3,7 @@ import { ArrowRight, Phone } from 'lucide-react'
 import BookingModal from './BookingModal'
 import AuditForm from './AuditForm'
 import Magnetic from './Magnetic'
+import Reveal from './Reveal'
 
 const CTA = () => {
   const [bookingOpen, setBookingOpen] = useState(false)
@@ -12,7 +13,7 @@ const CTA = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-zinc-950/40 to-neutral-950" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-zinc-500/5 rounded-full blur-3xl pointer-events-none" />
       <div className="relative max-w-5xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <Reveal className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-500/20 bg-zinc-900/50 backdrop-blur-sm text-zinc-400 text-xs mb-8">
             <Phone className="w-3.5 h-3.5" />
             Let&rsquo;s Build Together
@@ -32,7 +33,7 @@ const CTA = () => {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </button>
           </Magnetic>
-        </div>
+        </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
           <AuditForm />

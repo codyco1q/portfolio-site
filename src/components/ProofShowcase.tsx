@@ -199,7 +199,7 @@ const ProofShowcase = () => {
           const Icon = item.icon
           return (
             <Reveal key={item.title} className="h-full" delay={i * 0.08}>
-              <SpotlightCard className="h-full bg-zinc-900/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 hover:border-zinc-600/50 transition-all duration-300">
+              <SpotlightCard className="h-full bg-zinc-900/40 backdrop-blur-sm rounded-2xl p-5 sm:p-6 border border-zinc-800/50 hover:border-zinc-600/50 transition-all duration-300">
                 <div className="flex items-start gap-4 mb-5">
                   <div className="w-10 h-10 rounded-lg bg-zinc-800/50 border border-zinc-700/50 flex items-center justify-center shrink-0 mt-0.5">
                     <Icon className="w-5 h-5 text-zinc-300" />

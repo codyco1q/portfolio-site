@@ -29,7 +29,7 @@ const DemoShowcase = () => {
                 allowFullScreen
               />
             ) : (
-              <video src={DEMO_VIDEO_URL} controls className="w-full h-full object-cover" />
+              <video src={DEMO_VIDEO_URL} controls className="w-full h-full object-contain bg-black" />
             )}
           </div>
         ) : (

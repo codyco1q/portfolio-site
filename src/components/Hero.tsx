@@ -11,10 +11,10 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-zinc-950 via-neutral-950 to-neutral-950" />
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-zinc-500/5 rounded-full blur-3xl pointer-events-none" />
       <div className="relative">
-        {!imgFailed && (
-          <Reveal y={16}>
-            <div className="mb-10 flex justify-center">
-              <div className="rounded-full bg-gradient-to-b from-zinc-200 to-zinc-600 p-[3px] shadow-[0_0_35px_-8px_rgba(255,255,255,0.25)]">
+        <Reveal y={16}>
+          <div className="mb-10 flex justify-center">
+            <div className="rounded-full bg-gradient-to-b from-zinc-200 to-zinc-600 p-[3px] shadow-[0_0_35px_-8px_rgba(255,255,255,0.25)]">
+              {!imgFailed ? (
                 <img
                   src="/headshot.jpg"
                   alt="Moaz Shahin (Cody) — AI Automation & Funnel Engineer"
@@ -23,10 +23,16 @@ const Hero = () => {
                   width={112}
                   height={112}
                 />
-              </div>
+              ) : (
+                <div className="w-28 h-28 rounded-full bg-neutral-900 flex items-center justify-center">
+                  <span className="text-3xl font-bold bg-gradient-to-r from-zinc-200 to-zinc-400 bg-clip-text text-transparent">
+                    MS
+                  </span>
+                </div>
+              )}
             </div>
-          </Reveal>
-        )}
+          </div>
+        </Reveal>
 
         <Reveal y={16}>
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-500/20 bg-zinc-900/50 backdrop-blur-sm text-zinc-400 text-xs mb-8 font-mono">
@@ -54,7 +60,7 @@ const Hero = () => {
           </p>
         </Reveal>
 
-        <Reveal delay={0.3}>
+        <Reveal delay={0.3} immediate>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Magnetic>
               <a
@@ -75,7 +81,11 @@ const Hero = () => {
         </Reveal>
 
         <Reveal delay={0.45} y={0}>
-          <div className="mt-16 animate-bounce text-zinc-600">↓</div>
+          <div className="mt-16 text-zinc-600" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="mx-auto animate-bounce">
+              <path d="M7 10l5 5 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
         </Reveal>
       </div>
     </section>

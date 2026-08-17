@@ -56,6 +56,7 @@ const Footer = () => {
                 href="https://www.linkedin.com/in/moaz-shahin/"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="LinkedIn"
                 className="w-9 h-9 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center hover:bg-zinc-800 transition-colors"
               >
                 <LinkedinIcon />
@@ -64,6 +65,7 @@ const Footer = () => {
                 href="https://github.com/codyco1q"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="GitHub"
                 className="w-9 h-9 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center hover:bg-zinc-800 transition-colors"
               >
                 <GithubIcon />
@@ -99,6 +101,7 @@ const Footer = () => {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={`${link.label} (opens in new tab)`}
                   className="flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-300 transition-colors"
                 >
                   <ExternalLink className="w-3 h-3" />

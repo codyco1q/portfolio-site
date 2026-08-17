@@ -1,21 +1,19 @@
 import { useLayoutEffect, useRef, type ReactNode } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { prefersReducedMotion } from '../lib/utils'
 
 gsap.registerPlugin(ScrollTrigger)
-
-const prefersReducedMotion = () =>
-  typeof window !== 'undefined' &&
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 type RevealProps = {
   children: ReactNode
   className?: string
   delay?: number
   y?: number
+  immediate?: boolean
 }
 
-const Reveal = ({ children, className, delay = 0, y = 24 }: RevealProps) => {
+const Reveal = ({ children, className, delay = 0, y = 24, immediate }: RevealProps) => {
   const ref = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
@@ -28,6 +26,11 @@ const Reveal = ({ children, className, delay = 0, y = 24 }: RevealProps) => {
       { opacity: 1, y: 0, duration: 0.8, delay, ease: 'power2.out' },
     )
 
+    if (immediate) {
+      tween.play()
+      return () => { tween.kill() }
+    }
+
     const trigger = ScrollTrigger.create({
       trigger: el,
       start: 'top 88%',
@@ -39,7 +42,7 @@ const Reveal = ({ children, className, delay = 0, y = 24 }: RevealProps) => {
       trigger.kill()
       tween.kill()
     }
-  }, [delay, y])
+  }, [delay, y, immediate])
 
   return (
     <div ref={ref} className={className}>

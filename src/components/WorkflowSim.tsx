@@ -1,9 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Check, type LucideIcon } from 'lucide-react'
-
-const prefersReducedMotion = () =>
-  typeof window !== 'undefined' &&
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches
+import { prefersReducedMotion } from '../lib/utils'
 
 export type WorkflowStep = {
   icon: LucideIcon
@@ -21,11 +18,39 @@ type WorkflowSimProps = {
 const WorkflowSim = ({ steps, interval = 1600, startIndex = 0 }: WorkflowSimProps) => {
   const reduced = useRef(prefersReducedMotion())
   const [tick, setTick] = useState(reduced.current ? 0 : startIndex)
+  const wrapperRef = useRef<HTMLDivElement>(null)
+  const inViewRef = useRef(false)
 
   useEffect(() => {
     if (reduced.current) return
-    const id = setInterval(() => setTick((t) => t + 1), interval)
-    return () => clearInterval(id)
+    const el = wrapperRef.current
+    if (!el) return
+
+    let id: ReturnType<typeof setInterval> | null = null
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (!inViewRef.current) {
+            inViewRef.current = true
+            id = setInterval(() => setTick((t) => t + 1), interval)
+          }
+        } else {
+          inViewRef.current = false
+          if (id) {
+            clearInterval(id)
+            id = null
+          }
+        }
+      },
+      { threshold: 0.1 },
+    )
+
+    observer.observe(el)
+    return () => {
+      observer.disconnect()
+      if (id) clearInterval(id)
+    }
   }, [interval])
 
   const n = steps.length
@@ -34,7 +59,7 @@ const WorkflowSim = ({ steps, interval = 1600, startIndex = 0 }: WorkflowSimProp
   const elapsed = tick * (interval / 1000)
 
   return (
-    <div className="space-y-4">
+    <div ref={wrapperRef} className="space-y-4">
       <div className="flex items-center justify-between rounded-lg bg-zinc-950/60 border border-zinc-800 px-3 py-2">
         <div className="flex items-center gap-2 text-[11px] font-mono text-emerald-300">
           {!reduced.current && (

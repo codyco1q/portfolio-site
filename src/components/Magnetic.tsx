@@ -1,4 +1,5 @@
 import { useRef, type ReactNode, type MouseEvent } from 'react'
+import { prefersReducedMotion } from '../lib/utils'
 
 type MagneticProps = {
   children: ReactNode
@@ -10,7 +11,7 @@ const Magnetic = ({ children, className = '' }: MagneticProps) => {
 
   const onMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     const el = ref.current
-    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (!el || prefersReducedMotion()) return
     const rect = el.getBoundingClientRect()
     const x = e.clientX - (rect.left + rect.width / 2)
     const y = e.clientY - (rect.top + rect.height / 2)

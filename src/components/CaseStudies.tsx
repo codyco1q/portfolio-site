@@ -64,7 +64,7 @@ const CaseStudies = () => {
           const Icon = study.icon
           return (
             <Reveal key={study.title} className="h-full" delay={i * 0.08}>
-              <SpotlightCard className="h-full flex flex-col bg-zinc-900/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 hover:border-zinc-600/50 transition-all duration-300">
+              <SpotlightCard className="h-full flex flex-col bg-zinc-900/40 backdrop-blur-sm rounded-2xl p-5 sm:p-6 border border-zinc-800/50 hover:border-zinc-600/50 transition-all duration-300">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-10 h-10 rounded-lg bg-zinc-800/50 border border-zinc-700/50 flex items-center justify-center">
                     <Icon className="w-5 h-5 text-zinc-300" />
@@ -78,7 +78,7 @@ const CaseStudies = () => {
 
                 <div className="grid grid-cols-3 gap-3 mb-5">
                   {study.metrics.map((m) => (
-                    <div key={m.label} className="rounded-xl bg-zinc-950/60 border border-zinc-800/70 px-2 py-3 text-center">
+                    <div key={m.label} className="rounded-xl bg-zinc-950/60 border border-zinc-800/70 px-1.5 sm:px-2 py-2.5 sm:py-3 text-center">
                       <div className="text-lg font-bold text-white leading-none mb-1.5">{m.value}</div>
                       <div className="text-[10px] text-zinc-500 uppercase tracking-wider leading-tight">
                         {m.label}
@@ -102,6 +102,7 @@ const CaseStudies = () => {
                   href={study.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={`${study.title} — View live funnel (opens in new tab)`}
                   className="mt-auto inline-flex items-center gap-1.5 text-sm text-zinc-300 hover:text-white transition-colors"
                 >
                   View Live Funnel
@@ -116,7 +117,7 @@ const CaseStudies = () => {
       {DEMO_VIDEO_URL && (
         <Reveal className="mt-16" y={16}>
           <div className="aspect-video max-w-4xl mx-auto rounded-2xl overflow-hidden border border-zinc-800 shadow-[0_0_50px_-15px_rgba(255,255,255,0.15)]">
-            <video src={DEMO_VIDEO_URL} controls className="w-full h-full object-cover" />
+            <video src={DEMO_VIDEO_URL} controls className="w-full h-full object-contain bg-black" />
           </div>
         </Reveal>
       )}

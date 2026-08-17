@@ -50,7 +50,7 @@ const PortfolioFunnels = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {funnels.map((funnel, i) => (
           <Reveal key={funnel.title} className="h-full" delay={i * 0.08}>
-            <SpotlightCard className="h-full bg-zinc-900/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 hover:border-zinc-600/50 transition-all duration-300 hover:-translate-y-1">
+            <SpotlightCard className="h-full bg-zinc-900/40 backdrop-blur-sm rounded-2xl p-5 sm:p-6 border border-zinc-800/50 hover:border-zinc-600/50 transition-all duration-300 hover:-translate-y-1">
               <h3 className="text-lg font-semibold text-white mb-3 leading-snug">{funnel.title}</h3>
               <p className="text-sm text-zinc-400 leading-relaxed mb-5">{funnel.description}</p>
               <div className="space-y-2">
@@ -60,6 +60,7 @@ const PortfolioFunnels = () => {
                     href={url.href}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`${url.label} (opens in new tab)`}
                     className="flex items-center gap-2 text-sm text-zinc-300 hover:text-white transition-colors group/link"
                   >
                     <ExternalLink className="w-3.5 h-3.5 shrink-0 text-zinc-500 group-hover/link:text-zinc-300" />

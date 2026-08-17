@@ -1,12 +1,8 @@
 import { useState, type FormEvent } from 'react'
 import { ArrowRight, Check, Loader2, Search, ShieldCheck } from 'lucide-react'
+import { inputClass } from '../lib/utils'
 
-const FORM_SUBMIT_URL = 'https://formsubmit.co/ajax/codyaxton@outlook.com'
-
-const AUDIT_ENDPOINT = import.meta.env.VITE_AUDIT_WEBHOOK_URL ?? FORM_SUBMIT_URL
-
-const inputClass =
-  'w-full px-4 py-3 rounded-xl bg-zinc-900/60 border border-zinc-700/60 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400/30 transition-colors'
+const AUDIT_ENDPOINT = '/api/audit'
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 
@@ -33,10 +29,6 @@ const AuditForm = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
-          _subject: 'New Automation Audit Request',
-          _template: 'table',
-          _captcha: 'false',
-          type: 'audit-request',
           name: name.trim(),
           email: email.trim(),
           website: website.trim(),
@@ -87,6 +79,7 @@ const AuditForm = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Full Name"
+              aria-label="Full Name"
               className={inputClass}
               required
             />
@@ -95,6 +88,7 @@ const AuditForm = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email Address"
+              aria-label="Email Address"
               className={inputClass}
               required
             />
@@ -104,6 +98,7 @@ const AuditForm = () => {
             value={website}
             onChange={(e) => setWebsite(e.target.value)}
             placeholder="yourdomain.com (optional)"
+            aria-label="Your website (optional)"
             className={inputClass}
           />
           <input
