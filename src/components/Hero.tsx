@@ -1,11 +1,8 @@
 import { ArrowRight } from 'lucide-react'
-import { useState } from 'react'
 import Magnetic from './Magnetic'
 import Reveal from './Reveal'
 
 const Hero = () => {
-  const [imgFailed, setImgFailed] = useState(false)
-
   return (
     <section className="relative flex flex-col items-center justify-center min-h-screen px-8 text-center overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-zinc-950 via-neutral-950 to-neutral-950" />
@@ -14,22 +11,13 @@ const Hero = () => {
         <Reveal y={16}>
           <div className="mb-10 flex justify-center">
             <div className="rounded-full bg-gradient-to-b from-zinc-200 to-zinc-600 p-[3px] shadow-[0_0_35px_-8px_rgba(255,255,255,0.25)]">
-              {!imgFailed ? (
-                <img
-                  src="/headshot.jpg"
-                  alt="Moaz Shahin (Cody) — AI Automation & Funnel Engineer"
-                  onError={() => setImgFailed(true)}
-                  className="w-28 h-28 rounded-full object-cover bg-neutral-900"
-                  width={112}
-                  height={112}
-                />
-              ) : (
-                <div className="w-28 h-28 rounded-full bg-neutral-900 flex items-center justify-center">
-                  <span className="text-3xl font-bold bg-gradient-to-r from-zinc-200 to-zinc-400 bg-clip-text text-transparent">
-                    MS
-                  </span>
-                </div>
-              )}
+              <img
+                src="/headshot.jpg"
+                alt="Moaz Shahin (Cody) — AI Automation & Funnel Engineer"
+                className="w-28 h-28 rounded-full object-cover bg-neutral-900"
+                width={112}
+                height={112}
+              />
             </div>
           </div>
         </Reveal>
