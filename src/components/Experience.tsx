@@ -3,6 +3,8 @@ import { Briefcase, Calendar, Download, FileText, MapPin, Mail, X } from 'lucide
 import Reveal from './Reveal'
 import Section from './Section'
 
+const resumeUrl = `${import.meta.env.BASE_URL}Moaz-Shahin-Resume.pdf`
+
 const roles = [
   {
     role: 'Founder & AI Automation Specialist',
@@ -98,7 +100,7 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
 
         <div className="h-[72vh]">
           <iframe
-            src="/Moaz-Shahin-Resume.pdf"
+            src={resumeUrl}
             title="Moaz Shahin Resume"
             className="w-full h-full border-0 bg-white"
           />
@@ -113,7 +115,7 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
             Egypt (Remote)
           </div>
           <a
-            href="/Moaz-Shahin-Resume.pdf"
+            href={resumeUrl}
             download
             className="inline-flex items-center gap-2 bg-gradient-to-r from-zinc-200 via-white to-zinc-400 text-neutral-950 px-6 py-2.5 rounded-full text-sm font-medium hover:from-zinc-100 hover:via-zinc-50 hover:to-zinc-300 transition-all duration-300 shadow-[0_0_25px_-5px_rgba(255,255,255,0.25)]"
           >
@@ -188,7 +190,7 @@ const Experience = () => {
             View Full Resume
           </button>
           <a
-            href="/Moaz-Shahin-Resume.pdf"
+            href={resumeUrl}
             download
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-medium text-zinc-300 border border-zinc-500/30 hover:bg-zinc-900 hover:border-zinc-400/50 transition-all duration-300"
           >

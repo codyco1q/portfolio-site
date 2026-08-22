@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Cody - AI Automation &amp; Funnel Engineer</title>
+  <desc id="description">Cody's portfolio for AI automation, voice agents, and high-converting sales funnels.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#09090b" />
+      <stop offset="0.55" stop-color="#18181b" />
+      <stop offset="1" stop-color="#27272a" />
+    </linearGradient>
+    <linearGradient id="mark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e4e4e7" />
+      <stop offset="1" stop-color="#71717a" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#background)" />
+  <rect x="74" y="74" width="126" height="126" rx="30" fill="url(#mark)" />
+  <text x="137" y="157" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="42" font-weight="700" fill="#09090b">&lt;/&gt;</text>
+  <text x="74" y="350" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="72" font-weight="700" fill="#fafafa">&lt; Cody /&gt;</text>
+  <text x="78" y="414" font-family="ui-sans-serif, system-ui, sans-serif" font-size="30" fill="#a1a1aa">AI Automation &amp; Funnel Engineer</text>
+  <path d="M78 493H1122" stroke="#52525b" stroke-width="2" />
+  <text x="78" y="548" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" fill="#d4d4d8">codyco1q.github.io/portfolio-site</text>
+</svg>
