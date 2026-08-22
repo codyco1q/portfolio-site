@@ -34,7 +34,7 @@ const Hero = () => {
           </p>
         </Reveal>
 
-        <Reveal delay={0.3}>
+        <Reveal delay={0.3} immediate>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Magnetic>
               <a
@@ -55,7 +55,11 @@ const Hero = () => {
         </Reveal>
 
         <Reveal delay={0.45} y={0}>
-          <div className="mt-16 animate-bounce text-zinc-600">↓</div>
+          <div className="mt-16 text-zinc-600" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="mx-auto animate-bounce">
+              <path d="M7 10l5 5 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
         </Reveal>
       </div>
     </section>

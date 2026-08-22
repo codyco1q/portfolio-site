@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import {
   ArrowRight,
   Calendar,
@@ -10,9 +10,9 @@ import {
   UserCircle,
   X,
 } from 'lucide-react'
+import { inputClass } from '../lib/utils'
 
-const MAKE_WEBHOOK_URL =
-  import.meta.env.VITE_MAKE_WEBHOOK_URL ?? 'https://hook.make.com/your-webhook-url'
+const MAKE_ENDPOINT = '/api/booking'
 
 const getDateOptions = () => {
   const options: { value: string; weekday: string; day: number; month: string }[] = []
@@ -44,8 +44,21 @@ const formatTime = (t: string) => {
   return `${hour}:${String(m).padStart(2, '0')} ${period}`
 }
 
-const inputClass =
-  'w-full px-4 py-3 rounded-xl bg-zinc-900/60 border border-zinc-700/60 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400/30 transition-colors'
+const getTimezone = () => {
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone
+  } catch {
+    return ''
+  }
+}
+
+const getUtcOffset = () => {
+  const offset = -new Date().getTimezoneOffset()
+  const sign = offset >= 0 ? '+' : '-'
+  const h = String(Math.floor(Math.abs(offset) / 60)).padStart(2, '0')
+  const m = String(Math.abs(offset) % 60).padStart(2, '0')
+  return `${sign}${h}:${m}`
+}
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 
@@ -59,11 +72,43 @@ const BookingModal = ({ onClose }: { onClose: () => void }) => {
   const [notes, setNotes] = useState('')
   const [honeypot, setHoneypot] = useState('')
   const [status, setStatus] = useState<Status>('idle')
+  const modalRef = useRef<HTMLDivElement>(null)
+  const firstInputRef = useRef<HTMLInputElement>(null)
+
+  const timezone = getTimezone()
+  const utcOffset = getUtcOffset()
 
   useEffect(() => {
+    const modal = modalRef.current
+    if (!modal) return
+
+    firstInputRef.current?.focus()
+
+    const focusable = modal.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    )
+    const first = focusable[0]
+    const last = focusable[focusable.length - 1]
+
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
+      if (e.key === 'Escape') {
+        onClose()
+        return
+      }
+      if (e.key !== 'Tab') return
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault()
+          last.focus()
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
     }
+
     window.addEventListener('keydown', handleKey)
     document.body.style.overflow = 'hidden'
     return () => {
@@ -95,7 +140,9 @@ const BookingModal = ({ onClose }: { onClose: () => void }) => {
     }
     setStatus('submitting')
     try {
-      const res = await fetch(MAKE_WEBHOOK_URL, {
+      const tz = getTimezone()
+      const offset = getUtcOffset()
+      const res = await fetch(MAKE_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -103,7 +150,8 @@ const BookingModal = ({ onClose }: { onClose: () => void }) => {
           email: email.trim(),
           date: selectedDate,
           time: selectedTime,
-          startDateTime: `${selectedDate}T${selectedTime}:00`,
+          startDateTime: `${selectedDate}T${selectedTime}:00${offset}`,
+          timezone: tz,
           notes: notes.trim(),
         }),
       })
@@ -135,7 +183,7 @@ const BookingModal = ({ onClose }: { onClose: () => void }) => {
           <p className="text-sm text-zinc-400 mt-2">Check your inbox for calendar details.</p>
           <div className="mt-4 inline-flex items-center gap-2 text-xs text-zinc-400 font-mono bg-zinc-900/60 border border-zinc-800 rounded-lg px-3 py-1.5">
             <Calendar className="w-3.5 h-3.5" />
-            {selectedDate} · {formatTime(selectedTime)}
+            {selectedDate} · {formatTime(selectedTime)} ({utcOffset})
           </div>
           <div className="flex flex-col sm:flex-row gap-3 mt-8 justify-center">
             <button
@@ -166,6 +214,7 @@ const BookingModal = ({ onClose }: { onClose: () => void }) => {
     >
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
       <div
+        ref={modalRef}
         className="relative w-full max-w-2xl rounded-2xl bg-gradient-to-b from-zinc-200/40 via-zinc-600/30 to-zinc-900/70 p-px shadow-[0_0_60px_-15px_rgba(255,255,255,0.2)]"
         onClick={(e) => e.stopPropagation()}
       >
@@ -241,6 +290,11 @@ const BookingModal = ({ onClose }: { onClose: () => void }) => {
                     )
                   })}
                 </div>
+                {timezone && (
+                  <p className="text-[10px] text-zinc-600 mt-2 font-mono">
+                    All times in your timezone: {timezone} (UTC{utcOffset})
+                  </p>
+                )}
               </div>
 
               <div>
@@ -249,10 +303,12 @@ const BookingModal = ({ onClose }: { onClose: () => void }) => {
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <input
+                    ref={firstInputRef}
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Full Name"
+                    aria-label="Full Name"
                     className={inputClass}
                     required
                   />
@@ -261,6 +317,7 @@ const BookingModal = ({ onClose }: { onClose: () => void }) => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Email Address"
+                    aria-label="Email Address"
                     className={inputClass}
                     required
                   />
@@ -269,12 +326,14 @@ const BookingModal = ({ onClose }: { onClose: () => void }) => {
                     value={website}
                     onChange={(e) => setWebsite(e.target.value)}
                     placeholder="yourdomain.com"
+                    aria-label="Your website (optional)"
                     className={`${inputClass} sm:col-span-2`}
                   />
                   <textarea
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder="Automation goals / notes (optional)"
+                    aria-label="Automation goals or notes"
                     rows={3}
                     className={`${inputClass} sm:col-span-2 resize-none`}
                   />

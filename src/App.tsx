@@ -5,10 +5,14 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import TechMarquee from './components/TechMarquee'
 import Stats from './components/Stats'
+import ClientLogos from './components/ClientLogos'
 import PortfolioFunnels from './components/PortfolioFunnels'
 import ProofShowcase from './components/ProofShowcase'
+import DemoShowcase from './components/DemoShowcase'
 import CaseStudies from './components/CaseStudies'
+import Testimonials from './components/Testimonials'
 import Services from './components/Services'
+import Process from './components/Process'
 import Experience from './components/Experience'
 import CTA from './components/CTA'
 import Footer from './components/Footer'
@@ -18,19 +22,28 @@ function App() {
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 1,
+      easing: (t) => 1 - Math.pow(1 - t, 3),
       touchMultiplier: 2,
     })
 
     lenisRef.current = lenis
 
-    function raf(time: number) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
+    const onAnchorClick = (event: MouseEvent) => {
+      const anchor = (event.target as HTMLElement).closest(
+        'a[href^="#"]',
+      ) as HTMLAnchorElement | null
+      if (!anchor) return
+      const hash = anchor.getAttribute('href')
+      if (!hash) return
+      event.preventDefault()
+      lenis.scrollTo(hash, { offset: -80 })
+      if (hash !== '#' && window.location.hash !== hash) {
+        history.pushState(null, '', hash)
+      }
     }
 
-    requestAnimationFrame(raf)
+    document.addEventListener('click', onAnchorClick)
 
     gsap.ticker.add((time) => {
       lenis.raf(time * 1000)
@@ -39,6 +52,7 @@ function App() {
     gsap.ticker.lagSmoothing(0)
 
     return () => {
+      document.removeEventListener('click', onAnchorClick)
       lenis.destroy()
       gsap.ticker.remove(lenis.raf as unknown as gsap.TickerCallback)
     }
@@ -58,10 +72,14 @@ function App() {
         <Hero />
         <TechMarquee />
         <Stats />
+        <ClientLogos />
         <PortfolioFunnels />
         <ProofShowcase />
+        <DemoShowcase />
         <CaseStudies />
+        <Testimonials />
         <Services />
+        <Process />
         <Experience />
         <CTA />
       </main>

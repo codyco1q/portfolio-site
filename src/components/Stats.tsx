@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Database, Globe, TrendingUp, Cpu } from 'lucide-react'
+import { prefersReducedMotion } from '../lib/utils'
 
 const stats = [
   {
@@ -57,6 +58,10 @@ const useCountUp = (target: number, inView: boolean, duration = 1600) => {
 
   useEffect(() => {
     if (!inView) return
+    if (prefersReducedMotion()) {
+      setValue(target)
+      return
+    }
     let raf = 0
     const start = performance.now()
     const tick = (now: number) => {
@@ -80,7 +85,7 @@ const StatValue = ({ stat }: { stat: (typeof stats)[number] }) => {
   return (
     <div
       ref={ref}
-      className="bg-neutral-950/80 p-8 text-center group hover:bg-zinc-900/60 transition-colors"
+      className="bg-zinc-900/40 p-8 text-center group hover:bg-zinc-900/60 transition-colors"
     >
       <div className="w-12 h-12 rounded-xl bg-zinc-800/50 border border-zinc-700/50 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300">
         <stat.icon className="w-6 h-6 text-zinc-300" />
