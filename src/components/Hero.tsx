@@ -4,7 +4,7 @@ import Reveal from './Reveal'
 
 const Hero = () => {
   return (
-    <section className="relative flex flex-col items-center justify-center min-h-screen px-8 text-center overflow-hidden">
+    <section className="relative flex flex-col items-center justify-start md:justify-center min-h-screen px-8 pt-28 md:pt-0 pb-10 md:pb-0 text-center overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-zinc-950 via-neutral-950 to-neutral-950" />
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-zinc-500/5 rounded-full blur-3xl pointer-events-none" />
       <div className="relative">
