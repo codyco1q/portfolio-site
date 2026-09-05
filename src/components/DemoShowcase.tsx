@@ -1,7 +1,8 @@
-import { Play, CalendarCheck } from 'lucide-react'
+import { CalendarCheck, Database, Repeat, Send } from 'lucide-react'
 import Reveal from './Reveal'
 import Section from './Section'
 import Magnetic from './Magnetic'
+import WorkflowCanvas, { type WorkflowNode } from './WorkflowCanvas'
 
 const DEMO_VIDEO_URL = import.meta.env.VITE_DEMO_VIDEO_URL ?? ''
 const DEMO_YOUTUBE_ID = import.meta.env.VITE_DEMO_YOUTUBE_ID ?? ''
@@ -9,13 +10,44 @@ const DEMO_LABEL = import.meta.env.VITE_DEMO_LABEL ?? ''
 
 const hasVideo = DEMO_VIDEO_URL !== '' || DEMO_YOUTUBE_ID !== ''
 
+const DEMO_WORKFLOW: WorkflowNode[] = [
+  {
+    icon: CalendarCheck,
+    label: 'Appointment Booked',
+    detail: 'Client submits the form — the slot is instantly confirmed',
+    duration: '0.0s',
+    accent: 'emerald',
+  },
+  {
+    icon: Database,
+    label: 'CRM + Pipeline',
+    detail: 'Contact created, tagged, and pushed into the GoHighLevel pipeline',
+    duration: '0.4s',
+    accent: 'sky',
+  },
+  {
+    icon: Send,
+    label: 'Email · Telegram',
+    detail: 'Instant notification fires to the client and team via email + Telegram',
+    duration: '0.3s',
+    accent: 'violet',
+  },
+  {
+    icon: Repeat,
+    label: 'Auto Follow-Up',
+    detail: 'Conditional sequence reminds, nurtures, and escalates until they reply',
+    duration: '2.0s',
+    accent: 'amber',
+  },
+]
+
 const DemoShowcase = () => {
   return (
     <Section
       id="demo"
       eyebrow="See It In Action"
       title="Watch the Systems Run Live"
-      subtitle="A 60-second walkthrough of the AI voice agents, automation engines, and funnels working end-to-end."
+      subtitle="A single form submission flowing through the CRM, notifications, and auto follow-up — simulated live exactly like a production n8n or Make.com scenario."
     >
       <Reveal className="mt-4" y={16}>
         {hasVideo ? (
@@ -33,20 +65,12 @@ const DemoShowcase = () => {
             )}
           </div>
         ) : (
-          <div className="max-w-4xl mx-auto">
-            <div className="relative aspect-video rounded-2xl border border-dashed border-zinc-700/60 bg-zinc-900/30 flex flex-col items-center justify-center gap-5 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-zinc-800/10 via-transparent to-transparent" />
-              <div className="w-16 h-16 rounded-full bg-zinc-800/60 border border-zinc-700 flex items-center justify-center">
-                <Play className="w-6 h-6 text-zinc-400 ml-0.5" />
-              </div>
-              <div className="text-center px-6">
-                <p className="text-sm text-zinc-400 mb-1">
-                  Live walkthrough of the AI voice agents &amp; automation engines
-                </p>
-                <p className="text-xs text-zinc-600">
-                  Demo video drops in soon — request the private walkthrough below.
-                </p>
-              </div>
+          <div className="max-w-4xl mx-auto space-y-8">
+            <WorkflowCanvas
+              nodes={DEMO_WORKFLOW}
+              loopNote="Auto follow-up loops every 2 days until the client replies or converts."
+            />
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Magnetic>
                 <a
                   href="#cta"
@@ -56,6 +80,9 @@ const DemoShowcase = () => {
                   See It Live
                 </a>
               </Magnetic>
+              <p className="text-xs font-mono text-zinc-500">
+                GoHighLevel · Make.com · n8n
+              </p>
             </div>
           </div>
         )}

@@ -51,8 +51,6 @@ const Testimonials = () => {
     setIndex((i) => (i - 1 + clientResults.length) % clientResults.length)
   }
 
-  const current = clientResults[index]
-
   return (
     <Section
       id="results"
@@ -79,28 +77,42 @@ const Testimonials = () => {
             aria-atomic="true"
             className="relative"
           >
-            <div
-              key={index}
-              role="group"
-              aria-roledescription="slide"
-              aria-label={`Result ${index + 1} of ${clientResults.length}`}
-              className="animate-fadeSlide"
-            >
-              <p className="text-lg md:text-xl text-zinc-200 leading-relaxed mb-8">{current.summary}</p>
-              <div className="flex flex-wrap gap-2 mb-6">
-                {current.metrics.map((m) => (
-                  <span
-                    key={m}
-                    className="text-xs font-mono text-emerald-300/90 bg-emerald-400/10 border border-emerald-400/20 rounded-full px-3 py-1.5"
+            <div className="grid">
+              {clientResults.map((item, i) => {
+                const isActive = i === index
+                return (
+                  <div
+                    key={item.company}
+                    role="group"
+                    aria-roledescription="slide"
+                    aria-label={`Result ${i + 1} of ${clientResults.length}`}
+                    aria-hidden={!isActive}
+                    className={`col-start-1 row-start-1 transition-opacity duration-500 ease-out ${
+                      isActive
+                        ? 'opacity-100 z-10'
+                        : 'opacity-0 pointer-events-none'
+                    }`}
                   >
-                    {m}
-                  </span>
-                ))}
-              </div>
-              <div className="mt-auto">
-                <div className="text-sm font-semibold text-white">{current.company}</div>
-                <div className="text-xs text-zinc-500 mt-0.5">{current.tag}</div>
-              </div>
+                    <p className="text-lg md:text-xl text-zinc-200 leading-relaxed mb-8">
+                      {item.summary}
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {item.metrics.map((m) => (
+                        <span
+                          key={m}
+                          className="text-xs font-mono text-emerald-300/90 bg-emerald-400/10 border border-emerald-400/20 rounded-full px-3 py-1.5"
+                        >
+                          {m}
+                        </span>
+                      ))}
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold text-white">{item.company}</div>
+                      <div className="text-xs text-zinc-500 mt-0.5">{item.tag}</div>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </div>
 
