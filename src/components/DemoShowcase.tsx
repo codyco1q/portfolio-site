@@ -65,7 +65,7 @@ const DemoShowcase = () => {
             )}
           </div>
         ) : (
-          <div className="max-w-4xl mx-auto space-y-8">
+          <div className="max-w-6xl mx-auto space-y-8">
             <WorkflowCanvas
               nodes={DEMO_WORKFLOW}
               loopNote="Auto follow-up loops every 2 days until the client replies or converts."

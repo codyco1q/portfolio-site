@@ -2,6 +2,8 @@ import { Fragment, useEffect, useRef, useState } from 'react'
 import {
   Check,
   ChevronRight,
+  Pause,
+  Play,
   Repeat,
   type LucideIcon,
 } from 'lucide-react'
@@ -63,10 +65,11 @@ const WorkflowCanvas = ({
 }: WorkflowCanvasProps) => {
   const reduced = useRef(prefersReducedMotion())
   const [tick, setTick] = useState(0)
+  const [paused, setPaused] = useState(false)
   const railRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (reduced.current) return
+    if (reduced.current || paused) return
     const el = railRef.current
     if (!el) return
 
@@ -89,7 +92,7 @@ const WorkflowCanvas = ({
       observer.disconnect()
       if (id) clearInterval(id)
     }
-  }, [interval])
+  }, [interval, paused])
 
   const n = nodes.length
   const active = tick % n
@@ -105,17 +108,28 @@ const WorkflowCanvas = ({
     >
       <div className="flex items-center justify-between gap-3 border-b border-zinc-800/70 bg-zinc-950/60 px-4 py-2.5">
         <div className="flex items-center gap-2 text-[11px] font-mono text-emerald-300">
-          {!reduced.current && (
+          {!reduced.current && !paused && (
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
             </span>
           )}
-          SCENARIO RUNNING
+          {reduced.current || paused ? 'SCENARIO PAUSED' : 'SCENARIO RUNNING'}
         </div>
-        <div className="flex items-center gap-3 text-[11px] font-mono text-zinc-500 tabular-nums">
-          <span>RUN #{String(run).padStart(2, '0')}</span>
-          <span>{elapsed.toFixed(1)}s</span>
+        <div className="flex items-center gap-4">
+          <div className="text-[11px] font-mono text-zinc-500 tabular-nums">
+            RUN #{String(run).padStart(2, '0')} · {elapsed.toFixed(1)}s
+          </div>
+          {!reduced.current && (
+            <button
+              onClick={() => setPaused((p) => !p)}
+              aria-pressed={paused}
+              className="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-md border border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:border-zinc-500 transition-colors"
+            >
+              {paused ? <Play className="w-3 h-3" /> : <Pause className="w-3 h-3" />}
+              {paused ? 'Resume' : 'Pause'}
+            </button>
+          )}
         </div>
       </div>
 
@@ -132,7 +146,7 @@ const WorkflowCanvas = ({
                 <Fragment key={node.label}>
                   <div className="flex flex-col items-center shrink-0">
                     <div
-                      className={`relative w-28 sm:w-32 md:w-36 rounded-xl border p-3 transition-all duration-500 ${
+                      className={`relative w-44 sm:w-52 md:w-56 rounded-xl border p-4 transition-all duration-500 ${
                         isActive
                           ? `bg-zinc-900/90 ${flowGlow[node.accent]}`
                           : isDone
@@ -145,9 +159,9 @@ const WorkflowCanvas = ({
                           className={`absolute inset-0 rounded-xl border ${a.ring} animate-ping`}
                         />
                       )}
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-start gap-3">
                         <div
-                          className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors duration-500 ${
+                          className={`w-10 h-10 shrink-0 rounded-xl flex items-center justify-center transition-colors duration-500 ${
                             isActive
                               ? a.tile
                               : isDone
@@ -156,14 +170,14 @@ const WorkflowCanvas = ({
                           }`}
                         >
                           {isDone ? (
-                            <Check className="w-4 h-4" />
+                            <Check className="w-5 h-5" />
                           ) : (
-                            <Icon className="w-4 h-4" />
+                            <Icon className="w-5 h-5" />
                           )}
                         </div>
-                        <div className="min-w-0 text-left">
+                        <div className="min-w-0 flex-1 text-left">
                           <p
-                            className={`text-xs font-semibold leading-tight truncate transition-colors duration-500 ${
+                            className={`text-sm font-semibold leading-snug transition-colors duration-500 ${
                               isActive
                                 ? 'text-white'
                                 : isDone
@@ -173,12 +187,15 @@ const WorkflowCanvas = ({
                           >
                             {node.label}
                           </p>
-                          <p className="text-[10px] font-mono text-zinc-600 mt-0.5 tabular-nums">
-                            {node.duration}
+                          <p className="text-[11px] text-zinc-500 leading-snug mt-1.5">
+                            {node.detail}
+                          </p>
+                          <p className="text-[10px] font-mono text-zinc-600 mt-2 tabular-nums">
+                            ⏱ {node.duration}
                           </p>
                         </div>
                       </div>
-                      {isActive && (
+                      {isActive && !paused && (
                         <span
                           className={`absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-mono uppercase tracking-widest px-2 py-0.5 rounded-full border ${a.chip} animate-pulse`}
                         >
@@ -189,7 +206,7 @@ const WorkflowCanvas = ({
                   </div>
 
                   {i < n - 1 && (
-                    <div className="flex items-center self-start mt-4 h-7 shrink-0">
+                    <div className="flex items-center self-start mt-6 h-7 shrink-0">
                       <div className="relative w-8 sm:w-12 md:w-16 h-7">
                         <span
                           className={`absolute inset-x-0 top-1/2 -translate-y-1/2 h-[2px] rounded-full transition-colors duration-500 ${
@@ -200,7 +217,7 @@ const WorkflowCanvas = ({
                                 : 'bg-zinc-800'
                           }`}
                         />
-                        {reached && !reduced.current && (
+                        {reached && !reduced.current && !paused && (
                           <>
                             <span className="absolute top-1/2 -translate-y-1/2 left-0 w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)] animate-flow" />
                             <span className="absolute top-1/2 -translate-y-1/2 left-0 w-1 h-1 rounded-full bg-emerald-300/80 animate-flow [animation-delay:0.55s]" />
@@ -241,7 +258,7 @@ const WorkflowCanvas = ({
             Step {active + 1}/{n} · {nodes[active].label}
             {!reduced.current && (
               <span className="ml-2 text-[10px] font-mono text-emerald-300">
-                ● LIVE
+                {paused ? '⏸ PAUSED' : '● LIVE'}
               </span>
             )}
           </p>
