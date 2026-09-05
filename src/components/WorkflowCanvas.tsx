@@ -134,8 +134,7 @@ const WorkflowCanvas = ({
       </div>
 
       <div className="bg-[radial-gradient(circle,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:18px_18px] px-4 md:px-7 py-7">
-        <div className="overflow-x-auto pb-1 -mx-1 px-1">
-          <div className="flex items-start min-w-max">
+          <div className="flex flex-wrap items-start justify-center gap-x-2 gap-y-8 lg:flex-nowrap lg:gap-x-0.5">
             {nodes.map((node, i) => {
               const Icon = node.icon
               const a = accents[node.accent]
@@ -144,14 +143,14 @@ const WorkflowCanvas = ({
               const reached = i <= active
               return (
                 <Fragment key={node.label}>
-                  <div className="flex flex-col items-center shrink-0">
+                  <div className="flex flex-col items-center w-[46%] max-w-40 lg:w-48 lg:max-w-none shrink-0">
                     <div
-                      className={`relative w-44 sm:w-52 md:w-56 rounded-xl border p-4 transition-all duration-500 ${
+                      className={`relative w-full rounded-xl border p-3.5 transition-all duration-500 hover:scale-[1.02] ${
                         isActive
                           ? `bg-zinc-900/90 ${flowGlow[node.accent]}`
                           : isDone
                             ? 'bg-zinc-900/70 border-emerald-400/40'
-                            : 'bg-zinc-900/70 border-zinc-800/80'
+                            : 'bg-zinc-900/70 border-zinc-800/80 hover:border-zinc-700/70'
                       }`}
                     >
                       {isActive && !reduced.current && (
@@ -159,9 +158,9 @@ const WorkflowCanvas = ({
                           className={`absolute inset-0 rounded-xl border ${a.ring} animate-ping`}
                         />
                       )}
-                      <div className="flex items-start gap-3">
+                      <div className="flex flex-col items-center text-center gap-1.5">
                         <div
-                          className={`w-10 h-10 shrink-0 rounded-xl flex items-center justify-center transition-colors duration-500 ${
+                          className={`w-9 h-9 rounded-xl flex items-center justify-center transition-colors duration-500 ${
                             isActive
                               ? a.tile
                               : isDone
@@ -170,34 +169,40 @@ const WorkflowCanvas = ({
                           }`}
                         >
                           {isDone ? (
-                            <Check className="w-5 h-5" />
+                            <Check className="w-4.5 h-4.5" />
                           ) : (
-                            <Icon className="w-5 h-5" />
+                            <Icon className="w-4.5 h-4.5" />
                           )}
                         </div>
-                        <div className="min-w-0 flex-1 text-left">
-                          <p
-                            className={`text-sm font-semibold leading-snug transition-colors duration-500 ${
-                              isActive
-                                ? 'text-white'
-                                : isDone
-                                  ? 'text-zinc-300'
-                                  : 'text-zinc-400'
-                            }`}
-                          >
-                            {node.label}
-                          </p>
-                          <p className="text-[11px] text-zinc-500 leading-snug mt-1.5">
-                            {node.detail}
-                          </p>
-                          <p className="text-[10px] font-mono text-zinc-600 mt-2 tabular-nums">
-                            ⏱ {node.duration}
-                          </p>
-                        </div>
+                        <p
+                          className={`w-full text-xs font-semibold leading-snug transition-colors duration-500 ${
+                            isActive
+                              ? 'text-white'
+                              : isDone
+                                ? 'text-zinc-300'
+                                : 'text-zinc-400'
+                          }`}
+                        >
+                          {node.label}
+                        </p>
+                        <p
+                          className={`w-full text-[10px] leading-snug transition-colors duration-500 ${
+                            isActive
+                              ? 'text-zinc-400'
+                              : isDone
+                                ? 'text-zinc-500'
+                                : 'text-zinc-600'
+                          }`}
+                        >
+                          {node.detail}
+                        </p>
+                        <span className="text-[9px] font-mono text-zinc-600 tabular-nums px-1.5 py-0.5 rounded border border-zinc-800/70 bg-zinc-900/60">
+                          {node.duration}
+                        </span>
                       </div>
                       {isActive && !paused && (
                         <span
-                          className={`absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-mono uppercase tracking-widest px-2 py-0.5 rounded-full border ${a.chip} animate-pulse`}
+                          className={`absolute -bottom-2.5 left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-mono uppercase tracking-widest px-2 py-0.5 rounded-full border ${a.chip} animate-pulse`}
                         >
                           RUNNING
                         </span>
@@ -206,8 +211,8 @@ const WorkflowCanvas = ({
                   </div>
 
                   {i < n - 1 && (
-                    <div className="flex items-center self-start mt-6 h-7 shrink-0">
-                      <div className="relative w-8 sm:w-12 md:w-16 h-7">
+                    <div className="hidden lg:flex items-center self-start mt-4 h-7 shrink-0">
+                      <div className="relative w-8 h-7">
                         <span
                           className={`absolute inset-x-0 top-1/2 -translate-y-1/2 h-[2px] rounded-full transition-colors duration-500 ${
                             i === active
@@ -237,7 +242,6 @@ const WorkflowCanvas = ({
               )
             })}
           </div>
-        </div>
 
         {loopNote && (
           <div className="mt-6 flex items-center gap-2 text-[11px] font-mono text-zinc-500 border-t border-dashed border-zinc-800 pt-3 px-1">

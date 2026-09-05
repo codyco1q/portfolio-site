@@ -1,6 +1,7 @@
 import { Phone, Sparkles, Globe, Workflow } from 'lucide-react'
 import Reveal from './Reveal'
 import Section from './Section'
+import SpotlightCard from './SpotlightCard'
 
 const services = [
   {
@@ -43,7 +44,7 @@ const Services = () => {
           const Icon = service.icon
           return (
             <Reveal key={service.title} className="h-full" delay={i * 0.08}>
-              <div className="h-full group bg-zinc-900/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 hover:border-zinc-600/50 transition-all duration-300 hover:-translate-y-0.5">
+              <SpotlightCard className="h-full group bg-zinc-900/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 hover:border-zinc-600/50 transition-all duration-300 hover:-translate-y-0.5">
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-lg bg-zinc-800/50 border border-zinc-700/50 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-300">
                     <Icon className="w-5 h-5 text-zinc-300" />
@@ -53,7 +54,7 @@ const Services = () => {
                     <p className="text-sm text-zinc-400 leading-relaxed">{service.description}</p>
                   </div>
                 </div>
-              </div>
+              </SpotlightCard>
             </Reveal>
           )
         })}
