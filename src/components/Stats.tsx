@@ -81,6 +81,7 @@ const StatValue = ({ stat }: { stat: (typeof stats)[number] }) => {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInViewOnce(ref)
   const count = useCountUp(stat.countTo ?? 0, inView)
+  const isFixedValue = stat.value !== undefined
 
   return (
     <div
@@ -90,7 +91,13 @@ const StatValue = ({ stat }: { stat: (typeof stats)[number] }) => {
       <div className="w-12 h-12 rounded-xl bg-zinc-800/50 border border-zinc-700/50 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300">
         <stat.icon className="w-6 h-6 text-zinc-300" />
       </div>
-      <div className="text-2xl md:text-3xl font-bold text-white mb-2 tracking-tight tabular-nums">
+      <div
+        className={
+          isFixedValue
+            ? 'text-lg sm:text-2xl md:text-3xl font-bold text-white mb-2 tracking-tight leading-tight break-words'
+            : 'text-2xl md:text-3xl font-bold text-white mb-2 tracking-tight tabular-nums'
+        }
+      >
         {stat.countTo !== undefined ? (
           <>
             {stat.prefix}
