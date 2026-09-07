@@ -7,6 +7,28 @@ const resumeUrl = `${import.meta.env.BASE_URL}Moaz-Shahin-Resume.pdf`
 
 const roles = [
   {
+    role: 'Lead Funnel Engineer & Automation Architect',
+    company: 'Fusion 44X',
+    period: '2026',
+    location: 'Remote',
+    highlights: [
+      'Architected and built the flagship Fusion 44X direct-response funnel backed by Supabase and a real-time metrics dashboard.',
+      'Engineered full Meta event tracking with unique per-visit session creation and lead source attribution across all acquisition channels.',
+      'Built automated multi-channel follow-up sequences triggered instantly after form and calendar submissions, ensuring zero missed prospects.',
+    ],
+  },
+  {
+    role: 'Full-Stack LMS & Automation Architect',
+    company: 'LingoVantage',
+    period: '2025 – 2026',
+    location: 'Remote',
+    highlights: [
+      'Engineered an end-to-end online English academy with automated authentication and tiered student portals (A1, A2, etc.).',
+      'Built Supabase database infrastructure with an administrative dashboard for granting and revoking student portal access.',
+      'Deployed an auto-graded level placement exam system alongside automated registration workflows dispatching alerts via Telegram and WhatsApp.',
+    ],
+  },
+  {
     role: 'Founder & AI Automation Specialist',
     company: 'Mortal VA',
     period: '2023 – Present',
@@ -65,9 +87,11 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
     }
     window.addEventListener('keydown', handleKey)
     document.body.style.overflow = 'hidden'
+    document.documentElement.style.overflow = 'hidden'
     return () => {
       window.removeEventListener('keydown', handleKey)
       document.body.style.overflow = ''
+      document.documentElement.style.overflow = ''
     }
   }, [onClose])
 
@@ -81,6 +105,7 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
     >
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
       <div
+        data-lenis-prevent
         className="relative w-full max-w-4xl bg-neutral-950 border border-zinc-700/60 rounded-2xl shadow-[0_0_60px_-15px_rgba(255,255,255,0.15)] overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >

@@ -5,6 +5,20 @@ import Section from './Section'
 
 const clientResults = [
   {
+    company: 'Jarvis AI',
+    tag: 'AI Web & Funnel Engineer · 2025–2026',
+    summary:
+      'Engineered the end-to-end web architecture and conversion funnel ecosystem — integrating an AI chatbot assistant, an automated merchandise store, and a high-converting 7-day trial sales funnel with real-time market analysis tools.',
+    metrics: ['AI Chatbot', 'Merch Store System', 'High-Converting Funnel'],
+  },
+  {
+    company: 'Tadarab',
+    tag: 'GHL Automation Engineer · 2025',
+    summary:
+      'Engineered enterprise GoHighLevel backend automation architecture — dynamic bilingual language-filtered nurture sequences, custom CRM sales & student pipelines, and high-conversion branded email templates running 100% autonomously.',
+    metrics: ['Bilingual Nurture Logic', 'Custom GHL Pipelines', 'GHL Workflows'],
+  },
+  {
     company: 'GMC LLC',
     tag: 'AI Automation Consultant · 2024–2026',
     summary:

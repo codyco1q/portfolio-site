@@ -12,7 +12,7 @@ const stats = [
   },
   {
     icon: Globe,
-    countTo: 6,
+    countTo: 8,
     prefix: '',
     suffix: '+',
     label: 'Production Websites & VSL Engines Deployed',

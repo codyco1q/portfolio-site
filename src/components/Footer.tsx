@@ -32,10 +32,15 @@ const footerLinks = [
 ]
 
 const quickLinks = [
+  { label: 'Fusion 44X Lead Engine & CRM', href: 'https://go.fusion44x.com/' },
+  { label: 'LingoVantage English Platform', href: 'https://lingovantage.pages.dev/' },
+  { label: 'Webinar Registration Engine', href: 'https://webinar.gmc-llc.net/register' },
+  { label: 'Jarvis AI Core Platform', href: 'https://jarvisalgo.ai/' },
+  { label: 'Jarvis Algo Trial Funnel', href: 'https://funnel.jarvisalgo.ai/' },
+  { label: 'Tadarab GHL Automation', href: '#funnels' },
+  { label: 'GMC Skool Community Funnel', href: 'https://skool.gmc-llc.net/join-page' },
   { label: 'GMC Corporate Portal', href: 'https://gmc-llc.net/' },
   { label: 'VSL Booking Funnel', href: 'https://book-a-call.gmc-llc.net/step1-page' },
-  { label: 'Webinar Registration', href: 'https://webinar.gmc-llc.net/register' },
-  { label: 'Fusion 44X Lead Engine', href: 'https://go.fusion44x.com/' },
 ]
 
 const Footer = () => {

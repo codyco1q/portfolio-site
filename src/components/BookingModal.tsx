@@ -11,6 +11,15 @@ import {
   X,
 } from 'lucide-react'
 import { inputClass } from '../lib/utils'
+import CustomSelect from './CustomSelect'
+
+const GOAL_OPTIONS = [
+  'Book more clients & sales',
+  'Save time on repetitive work',
+  'Better follow-up with leads',
+  'Connect my tools & stop copy-paste',
+  'Something else',
+]
 
 const MAKE_ENDPOINT = '/api/booking'
 
@@ -68,6 +77,8 @@ const BookingModal = ({ onClose }: { onClose: () => void }) => {
   const [selectedTime, setSelectedTime] = useState('')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [goal, setGoal] = useState('')
   const [website, setWebsite] = useState('')
   const [notes, setNotes] = useState('')
   const [honeypot, setHoneypot] = useState('')
@@ -118,12 +129,15 @@ const BookingModal = ({ onClose }: { onClose: () => void }) => {
   }, [onClose])
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  const phoneValid = /^\+?[\d\s().-]{7,20}$/.test(phone.trim())
   const canSubmit =
-    name.trim() !== '' && emailValid && selectedDate !== '' && selectedTime !== '' && status !== 'submitting'
+    name.trim() !== '' && emailValid && phoneValid && goal !== '' && selectedDate !== '' && selectedTime !== '' && status !== 'submitting'
 
   const resetForm = () => {
     setName('')
     setEmail('')
+    setPhone('')
+    setGoal('')
     setWebsite('')
     setNotes('')
     setSelectedDate('')
@@ -148,6 +162,8 @@ const BookingModal = ({ onClose }: { onClose: () => void }) => {
         body: JSON.stringify({
           name: name.trim(),
           email: email.trim(),
+          phone: phone.trim(),
+          goal: goal.trim(),
           date: selectedDate,
           time: selectedTime,
           startDateTime: `${selectedDate}T${selectedTime}:00${offset}`,
@@ -322,18 +338,37 @@ const BookingModal = ({ onClose }: { onClose: () => void }) => {
                     required
                   />
                   <input
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="Phone Number"
+                    aria-label="Phone number"
+                    autoComplete="tel"
+                    inputMode="tel"
+                    className={inputClass}
+                    required
+                  />
+                  <input
                     type="text"
                     value={website}
                     onChange={(e) => setWebsite(e.target.value)}
-                    placeholder="yourdomain.com"
+                    placeholder="yourdomain.com (optional)"
                     aria-label="Your website (optional)"
-                    className={`${inputClass} sm:col-span-2`}
+                    className={inputClass}
+                  />
+                  <CustomSelect
+                    value={goal}
+                    onChange={setGoal}
+                    placeholder="What's your main goal?"
+                    options={GOAL_OPTIONS}
+                    ariaLabel="Primary goal"
+                    className="sm:col-span-2"
                   />
                   <textarea
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
-                    placeholder="Automation goals / notes (optional)"
-                    aria-label="Automation goals or notes"
+                    placeholder="Notes (optional)"
+                    aria-label="Notes"
                     rows={3}
                     className={`${inputClass} sm:col-span-2 resize-none`}
                   />

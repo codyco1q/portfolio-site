@@ -1,6 +1,6 @@
 import Reveal from './Reveal'
 
-const clients = ['GMC LLC', 'Fusion 44X', 'Helping Hands Systems', 'Total Post N Print']
+const clients = ['Fusion 44X', 'LingoVantage', 'Jarvis AI', 'Tadarab', 'GMC LLC', 'Helping Hands Systems']
 
 const ClientLogos = () => {
   return (
@@ -12,7 +12,7 @@ const ClientLogos = () => {
             Trusted by teams scaling with automation
           </p>
         </Reveal>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
           {clients.map((name, i) => (
             <Reveal key={name} delay={i * 0.05} y={8}>
               <div className="flex items-center justify-center h-14 px-3 sm:px-4 rounded-xl border border-zinc-800/50 bg-zinc-900/30 text-xs sm:text-sm font-mono tracking-widest text-zinc-500 uppercase text-center hover:text-zinc-300 hover:border-zinc-600/50 transition-colors">

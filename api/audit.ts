@@ -1,7 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 
 const AUDIT_WEBHOOK_URL = process.env.AUDIT_WEBHOOK_URL ?? ''
-const FALLBACK_EMAIL = 'codyaxton@outlook.com'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
@@ -13,9 +12,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const { name, email, website } = req.body ?? {}
+    const { name, email, phone, goal, website } = req.body ?? {}
 
-    if (!name || !email) {
+    if (!name || !email || !phone || !goal) {
       return res.status(400).json({ error: 'Missing required fields' })
     }
 
@@ -29,6 +28,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         type: 'audit-request',
         name,
         email,
+        phone: phone ?? '',
+        goal: goal ?? '',
         website: website ?? '',
       }),
     })

@@ -1,20 +1,32 @@
 import { useState, type FormEvent } from 'react'
 import { ArrowRight, Check, Loader2, Search, ShieldCheck } from 'lucide-react'
 import { inputClass } from '../lib/utils'
+import CustomSelect from './CustomSelect'
 
 const AUDIT_ENDPOINT = '/api/audit'
+
+const GOAL_OPTIONS = [
+  'Book more clients & sales',
+  'Save time on repetitive work',
+  'Better follow-up with leads',
+  'Connect my tools & stop copy-paste',
+  'Something else',
+]
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 
 const AuditForm = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [goal, setGoal] = useState('')
   const [website, setWebsite] = useState('')
   const [honeypot, setHoneypot] = useState('')
   const [status, setStatus] = useState<Status>('idle')
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-  const canSubmit = name.trim() !== '' && emailValid && status !== 'submitting'
+  const phoneValid = /^\+?[\d\s().-]{7,20}$/.test(phone.trim())
+  const canSubmit = name.trim() !== '' && emailValid && phoneValid && goal !== '' && status !== 'submitting'
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -31,6 +43,8 @@ const AuditForm = () => {
         body: JSON.stringify({
           name: name.trim(),
           email: email.trim(),
+          phone: phone.trim(),
+          goal: goal.trim(),
           website: website.trim(),
         }),
       })
@@ -84,15 +98,33 @@ const AuditForm = () => {
               required
             />
             <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email Address"
-              aria-label="Email Address"
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="Phone Number"
+              aria-label="Phone number"
+              autoComplete="tel"
+              inputMode="tel"
               className={inputClass}
               required
             />
           </div>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email Address"
+            aria-label="Email Address"
+            className={inputClass}
+            required
+          />
+          <CustomSelect
+            value={goal}
+            onChange={setGoal}
+            placeholder="What's your main goal?"
+            options={GOAL_OPTIONS}
+            ariaLabel="Primary goal"
+          />
           <input
             type="text"
             value={website}

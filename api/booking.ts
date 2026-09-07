@@ -12,16 +12,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const { name, email, date, time, startDateTime, notes } = req.body ?? {}
+    const { name, email, phone, goal, date, time, startDateTime, notes } = req.body ?? {}
 
-    if (!name || !email || !date || !time) {
+    if (!name || !email || !phone || !goal || !date || !time) {
       return res.status(400).json({ error: 'Missing required fields' })
     }
 
     const upstream = await fetch(MAKE_WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, date, time, startDateTime, notes }),
+      body: JSON.stringify({ name, email, phone: phone ?? '', goal: goal ?? '', date, time, startDateTime, notes }),
     })
 
     if (!upstream.ok) {

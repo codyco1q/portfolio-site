@@ -44,14 +44,14 @@ const Services = () => {
           const Icon = service.icon
           return (
             <Reveal key={service.title} className="h-full" delay={i * 0.08}>
-              <SpotlightCard className="h-full group bg-zinc-900/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 hover:border-zinc-600/50 transition-all duration-300 hover:-translate-y-0.5">
-                <div className="flex items-start gap-4">
+              <SpotlightCard className="h-full group bg-zinc-900/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 hover:border-zinc-600/50 transition-all duration-300 hover:-translate-y-0.5 overflow-hidden">
+                <div className="flex items-start gap-4 min-w-0">
                   <div className="w-10 h-10 rounded-lg bg-zinc-800/50 border border-zinc-700/50 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-300">
                     <Icon className="w-5 h-5 text-zinc-300" />
                   </div>
-                  <div>
-                    <h3 className="text-base font-semibold text-white mb-2">{service.title}</h3>
-                    <p className="text-sm text-zinc-400 leading-relaxed">{service.description}</p>
+                  <div className="min-w-0">
+                    <h3 className="text-base font-semibold text-white mb-2 break-words">{service.title}</h3>
+                    <p className="text-sm text-zinc-400 leading-relaxed break-words">{service.description}</p>
                   </div>
                 </div>
               </SpotlightCard>
